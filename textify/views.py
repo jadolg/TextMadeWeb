@@ -5,10 +5,21 @@ import requests
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
+PAGE_BOTTOM = '''<div style="margin: auto;
+    width: 13%;
+    border: 3px solid green;
+    padding: 10px;">
+    <h3>Text Made Web</h3>
+    <p>Making the web smaller</p>
+    <p>Go <a href="/">Home</a></p>
+    <p>Fork me on <a target="_blank" href="https://github.com/jadolg/TextMadeWeb">GitHub</a><p>
+</div>
+'''
+
 
 def home(request):
     if request.method == 'POST' and 'url' in request.POST:
-        return HttpResponseRedirect('/t/'+request.POST['url'])
+        return HttpResponseRedirect('/t/' + request.POST['url'])
     return render(request, 'search.html')
 
 
@@ -21,7 +32,7 @@ def remove_jumps(data):
     ndata = data
     p = re.compile(r'\[(.*?)\]', re.DOTALL)
     for i in p.findall(ndata):
-        ndata = ndata.replace('['+i+']', '['+i.replace('\n', ' ')+']')
+        ndata = ndata.replace('[' + i + ']', '[' + i.replace('\n', ' ') + ']')
 
     p = re.compile(r'\((.*?)\)', re.DOTALL)
     for i in p.findall(ndata):
@@ -36,16 +47,16 @@ def insert_cleaner_url(data, url):
     p = re.compile(r'\(http://(.*?)\)', re.DOTALL)
     for i in p.findall(data):
         if 'http://' + i not in urls:
-            urls.append('http://'+i)
+            urls.append('http://' + i)
 
     p = re.compile(r'\(https://(.*?)\)', re.DOTALL)
     for i in p.findall(data):
-        if 'https://'+i not in urls:
-            urls.append('https://'+i)
+        if 'https://' + i not in urls:
+            urls.append('https://' + i)
 
     for i in urls:
         try:
-            newdata = re.sub('('+url+'/t/)?'+i, url+'/t/' + i, newdata)
+            newdata = re.sub('(' + url + '/t/)?' + i, url + '/t/' + i, newdata)
         except:
             print('failed for', i)
 
@@ -56,17 +67,18 @@ def textify_it(request, url):
     try:
         page = requests.get(url, verify=False)
     except:
-        return render(request, 'search.html', {'message': 'There was an error trying to open '+url})
+        return render(request, 'search.html', {'message': 'There was an error trying to open ' + url})
     if page.status_code == 200:
         page = page.text
     else:
-        return render(request, 'search.html', {'message': "I'm unable to textify this page. Error code "+str(page.status_code)})
+        return render(request, 'search.html',
+                      {'message': "I'm unable to textify this page. Error code " + str(page.status_code)})
 
     md = html2text.html2text(page, bodywidth=0, baseurl=url)
     md = remove_img_md(md)
     md = insert_cleaner_url(md, get_url(request))
     md = remove_jumps(md)
-    return HttpResponse(markdown.markdown(md))
+    return HttpResponse(markdown.markdown(md)+PAGE_BOTTOM)
 
 
 def md_it(request, url):
