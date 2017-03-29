@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Made Web</title>
+</head>
+<body>
+<div style="margin: auto;
+    width: 30%;
+    border: 3px solid green;
+    padding: 10px;">
+    <h3>Text Made Web</h3>
+    {% if not message %}
+        <form method="post" action="/">
+            {% csrf_token %}
+            <input style="width: 80%" type="text" name="url"/>
+            <button type="submit">Text it!</button>
+        </form>
+    {% else %}
+        <h4 style="color: darkred">{{ message }}</h4>
+        <a href="/"><- back</a>
+    {% endif %}
+</div>
+</body>
+</html>
