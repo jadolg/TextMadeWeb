@@ -10,6 +10,7 @@
     border: 3px solid green;
     padding: 10px;">
     <h3>Text Made Web</h3>
+    <p>Making the web smaller</p>
     {% if not message %}
         <form method="post" action="/">
             {% csrf_token %}
@@ -21,5 +22,6 @@
         <a href="/"><- back</a>
     {% endif %}
 </div>
+<div style="position: fixed; bottom: 20px; left: 20px;">Fork me on <a target="_blank" href="https://github.com/jadolg/TextMadeWeb">GitHub</a></div>
 </body>
 </html>
