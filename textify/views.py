@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import html2text
 import markdown
 import re
@@ -81,12 +83,18 @@ def textify_it(request, url):
             return render(request, 'search.html',
                           {'message': "I'm unable to textify this page. Error code " + str(page.status_code)})
 
-        md = html2text.html2text(page, bodywidth=0, baseurl=url)
-        md = remove_img_md(md)
-        md = insert_cleaner_url(md, get_url(request))
-        md = remove_jumps(md)
-        return HttpResponse(markdown.markdown(md) + PAGE_BOTTOM)
+        try:
+            md = html2text.html2text(page, bodywidth=0, baseurl=url)
+            md = remove_img_md(md)
+            md = insert_cleaner_url(md, get_url(request))
+            md = remove_jumps(md)
+            return HttpResponse(markdown.markdown(md) + PAGE_BOTTOM)
+        except:
+            return HttpResponse('<h1 style="color: darkred">I am not able to textify this page</h1>'+page.text)
     else:
+        # asearch = requests.get('http://api.duckduckgo.com/?q='+'+'.join(url.split())+'&format=json', proxies=proxyDict)
+        # if asearch.status_code == 200:
+        #     pprint(asearch.json())
         return render(request, 'search.html',
                       {'message': 'Search not implemented yet :\'('})
 

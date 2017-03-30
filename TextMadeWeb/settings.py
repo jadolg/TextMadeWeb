@@ -25,7 +25,7 @@ SECRET_KEY = 'tu)3sdiryy+(k-eu2caz%sb^2b#)@=k2w$odag84ur)b!=m5#p'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['txtmdweb.herokuapp.com', ]
+ALLOWED_HOSTS = ['txtmdweb.herokuapp.com', '127.0.0.1', 'localhost', ]
 
 
 # Application definition
