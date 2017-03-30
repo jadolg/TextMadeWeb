@@ -16,6 +16,11 @@ PAGE_BOTTOM = '''<div style="margin: auto;
 </div>
 '''
 
+proxyDict = {
+    "http": "http://127.0.0.1:3128",
+    "https": "https://127.0.0.1:3128",
+}
+
 
 def home(request):
     if request.method == 'POST' and 'url' in request.POST:
@@ -66,7 +71,8 @@ def insert_cleaner_url(data, url):
 def textify_it(request, url):
     if url.startswith('http://') or url.startswith('https://'):
         try:
-            page = requests.get(url, verify=False)
+            page = requests.get(url, verify=False, proxies=proxyDict)
+            # page = requests.get(url, verify=False)
         except:
             return render(request, 'search.html', {'message': 'There was an error trying to open ' + url})
         if page.status_code == 200:
@@ -79,7 +85,7 @@ def textify_it(request, url):
         md = remove_img_md(md)
         md = insert_cleaner_url(md, get_url(request))
         md = remove_jumps(md)
-        return HttpResponse(markdown.markdown(md)+PAGE_BOTTOM)
+        return HttpResponse(markdown.markdown(md) + PAGE_BOTTOM)
     else:
         return render(request, 'search.html',
                       {'message': 'Search not implemented yet :\'('})
