@@ -90,7 +90,8 @@ def textify_it(request, url):
             md = remove_jumps(md)
             return HttpResponse(markdown.markdown(md) + PAGE_BOTTOM)
         except:
-            return HttpResponse('<h1 style="color: darkred">I am not able to textify this page</h1>'+page.text)
+            return render(request, 'search.html',
+                          {'message': 'I was unable to textify this page due to an empty response'})
     else:
         # asearch = requests.get('http://api.duckduckgo.com/?q='+'+'.join(url.split())+'&format=json', proxies=proxyDict)
         # if asearch.status_code == 200:
