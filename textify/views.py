@@ -64,21 +64,25 @@ def insert_cleaner_url(data, url):
 
 
 def textify_it(request, url):
-    try:
-        page = requests.get(url, verify=False)
-    except:
-        return render(request, 'search.html', {'message': 'There was an error trying to open ' + url})
-    if page.status_code == 200:
-        page = page.text
+    if url.startswith('http://') or url.startswith('https://'):
+        try:
+            page = requests.get(url, verify=False)
+        except:
+            return render(request, 'search.html', {'message': 'There was an error trying to open ' + url})
+        if page.status_code == 200:
+            page = page.text
+        else:
+            return render(request, 'search.html',
+                          {'message': "I'm unable to textify this page. Error code " + str(page.status_code)})
+
+        md = html2text.html2text(page, bodywidth=0, baseurl=url)
+        md = remove_img_md(md)
+        md = insert_cleaner_url(md, get_url(request))
+        md = remove_jumps(md)
+        return HttpResponse(markdown.markdown(md)+PAGE_BOTTOM)
     else:
         return render(request, 'search.html',
-                      {'message': "I'm unable to textify this page. Error code " + str(page.status_code)})
-
-    md = html2text.html2text(page, bodywidth=0, baseurl=url)
-    md = remove_img_md(md)
-    md = insert_cleaner_url(md, get_url(request))
-    md = remove_jumps(md)
-    return HttpResponse(markdown.markdown(md)+PAGE_BOTTOM)
+                      {'message': 'Search not implemented yet :\'('})
 
 
 def md_it(request, url):
