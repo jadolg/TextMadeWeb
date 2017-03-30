@@ -1,1 +1,1 @@
-web: gunicorn TextMadeWEb.wsgi --log-file -
+web: gunicorn3 TextMadeWEb.wsgi --log-file -
