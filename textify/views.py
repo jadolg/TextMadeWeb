@@ -6,6 +6,7 @@ import re
 import requests
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from google import google
 
 PAGE_BOTTOM = '''<div style="margin: auto;
     width: 13%;
@@ -27,7 +28,7 @@ proxyDict = {
 def home(request):
     if request.method == 'POST' and 'url' in request.POST:
         return HttpResponseRedirect('/t/' + request.POST['url'])
-    return render(request, 'search.html')
+    return render(request, 'home.html')
 
 
 def remove_img_md(data):
@@ -76,11 +77,11 @@ def textify_it(request, url):
             # page = requests.get(url, verify=False, proxies=proxyDict)
             page = requests.get(url, verify=False)
         except:
-            return render(request, 'search.html', {'message': 'There was an error trying to open ' + url})
+            return render(request, 'home.html', {'message': 'There was an error trying to open ' + url})
         if page.status_code == 200:
             page = page.text
         else:
-            return render(request, 'search.html',
+            return render(request, 'home.html',
                           {'message': "I'm unable to textify this page. Error code " + str(page.status_code)})
 
         try:
@@ -90,14 +91,13 @@ def textify_it(request, url):
             md = remove_jumps(md)
             return HttpResponse(markdown.markdown(md) + PAGE_BOTTOM)
         except:
-            return render(request, 'search.html',
+            return render(request, 'home.html',
                           {'message': 'I was unable to textify this page due to an empty response'})
     else:
-        # asearch = requests.get('http://api.duckduckgo.com/?q='+'+'.join(url.split())+'&format=json', proxies=proxyDict)
-        # if asearch.status_code == 200:
-        #     pprint(asearch.json())
-        return render(request, 'search.html',
-                      {'message': 'Search not implemented yet :\'('})
+        search_results = google.search(url)
+        return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request)})
+        # return render(request, 'home.html',
+        #               {'message': 'Search not implemented yet :\'('})
 
 
 def md_it(request, url):

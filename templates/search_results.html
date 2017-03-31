@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Made Web</title>
+</head>
+<body>
+<div style="margin: auto;
+    width: 80%;
+    border: 3px solid green;
+    padding: 10px;">
+    <h3>Text Made Web</h3>
+    <p>Making the web smaller</p>
+    {% for sr in results %}
+        <div>
+            <h3><a href="{{ baseurl }}/t/{{ sr.link }}">{{ sr.name }}</a></h3>
+            <h4>{{ sr.description }}</h4>
+        </div>
+    {% endfor %}
+</div>
+<div style="margin: auto;
+    width: 13%;
+    border: 3px solid green;
+    padding: 10px;
+    margin-top: 10px">
+    <h3>Text Made Web</h3>
+    <p>Making the web smaller</p>
+    <p>Go <a href="/">Home</a></p>
+    <p>Fork me on <a target="_blank" href="https://github.com/jadolg/TextMadeWeb">GitHub</a><p>
+</div>
+</body>
+</html>
