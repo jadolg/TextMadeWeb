@@ -75,7 +75,7 @@ def textify_it(request, url):
     if url.startswith('http://') or url.startswith('https://'):
         try:
             # page = requests.get(url, verify=False, proxies=proxyDict)
-            page = requests.get(url, verify=False)
+            page = requests.get(url, verify=False, allow_redirects=True)
         except:
             return render(request, 'home.html', {'message': 'There was an error trying to open ' + url})
         if page.status_code == 200:
@@ -101,7 +101,7 @@ def textify_it(request, url):
 
 
 def md_it(request, url):
-    page = requests.get(url, verify=False).text
+    page = requests.get(url, verify=False, allow_redirects=True).text
     md = html2text.html2text(page, bodywidth=0, baseurl=url)
     # result = '<p>' + '</p><p>'.join(md.split('\n')) + '</p>'
     return HttpResponse(md)
