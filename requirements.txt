@@ -1,7 +1,7 @@
 beautifulsoup4==4.5.3
 Django==1.10.6
 future==0.16.0
-Google-Search-API==1.1.14
+git+https://github.com/abenassi/Google-Search-API/
 gunicorn==19.7.1
 html2text==2016.9.19
 Markdown==2.6.8
