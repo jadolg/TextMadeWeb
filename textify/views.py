@@ -94,7 +94,7 @@ def textify_it(request, url):
             return render(request, 'home.html',
                           {'message': 'I was unable to textify this page due to an empty response'})
     else:
-        search_results = google.search(url)
+        search_results = google.search(url, 3)
         return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request)})
         # return render(request, 'home.html',
         #               {'message': 'Search not implemented yet :\'('})
