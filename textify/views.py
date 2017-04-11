@@ -85,19 +85,22 @@ def textify_it(request, url):
                           {'message': "I'm unable to textify this page. Error code " + str(page.status_code)})
 
         try:
+            title = ''
+            t = re.findall('<title>(.*?)</title>', page, re.IGNORECASE)
+            if len(t) > 0:
+                title = '<head><title> Text Made Web |' + t[0] + '</title></head>'
             md = html2text.html2text(page, bodywidth=0, baseurl=url)
             md = remove_img_md(md)
             md = insert_cleaner_url(md, get_url(request))
             md = remove_jumps(md)
-            return HttpResponse(markdown.markdown(md) + PAGE_BOTTOM)
+
+            return HttpResponse(title + '<body>' + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
         except:
             return render(request, 'home.html',
                           {'message': 'I was unable to textify this page due to an empty response'})
     else:
         search_results = google.search(url, 3)
         return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request)})
-        # return render(request, 'home.html',
-        #               {'message': 'Search not implemented yet :\'('})
 
 
 def md_it(request, url):
