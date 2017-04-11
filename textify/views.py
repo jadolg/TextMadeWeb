@@ -99,8 +99,12 @@ def textify_it(request, url):
             return render(request, 'home.html',
                           {'message': 'I was unable to textify this page due to an empty response'})
     else:
-        search_results = google.search(url, 3)
-        return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request)})
+        try:
+            search_results = google.search(url, 3)
+            return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request)})
+        except:
+            return render(request, 'home.html',
+                          {'message': "There has being an error while searching :'("})
 
 
 def md_it(request, url):
