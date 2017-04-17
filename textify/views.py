@@ -88,7 +88,7 @@ def textify_it(request, url):
             title = ''
             t = re.findall('<title>(.*?)</title>', page, re.IGNORECASE)
             if len(t) > 0:
-                title = '<head><title> Text Made Web |' + t[0] + '</title></head>'
+                title = '<head><title>' + t[0] + ' | Text Made Web</title></head>'
             md = html2text.html2text(page, bodywidth=0, baseurl=url)
             md = remove_img_md(md)
             md = insert_cleaner_url(md, get_url(request))
