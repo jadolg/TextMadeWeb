@@ -74,8 +74,8 @@ def insert_cleaner_url(data, url):
 def textify_it(request, url):
     if url.startswith('http://') or url.startswith('https://'):
         try:
-            page = requests.get(url, verify=False, proxies=proxyDict)
-            # page = requests.get(url, verify=False, allow_redirects=True)
+            # page = requests.get(url, verify=False, proxies=proxyDict)
+            page = requests.get(url, verify=False, allow_redirects=True)
         except:
             return render(request, 'home.html', {'message': 'There was an error trying to open ' + url})
         if page.status_code == 200:
