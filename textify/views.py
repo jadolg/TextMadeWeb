@@ -94,14 +94,18 @@ def textify_it(request, url):
             md = insert_cleaner_url(md, get_url(request))
             md = remove_jumps(md)
 
-            return HttpResponse(title + '<body><h3>'+url+'</h3>' + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
+            return HttpResponse(title + '<body>'
+                                        '<h2>' + title + '</h2>'
+                                + '<h3>' + url + '</h3>'
+                                + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
         except:
             return render(request, 'home.html',
                           {'message': 'I was unable to textify this page due to an empty response'})
     else:
         try:
             search_results = google.search(url, 3)
-            return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request), 'q': url})
+            return render(request, 'search_results.html',
+                          {'results': search_results, 'baseurl': get_url(request), 'q': url})
         except:
             return render(request, 'home.html',
                           {'message': "There has being an error while searching :'("})
