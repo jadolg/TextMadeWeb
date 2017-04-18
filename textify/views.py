@@ -96,7 +96,7 @@ def textify_it(request, url):
 
             return HttpResponse(title + '<body>'
                                         '<h2>' + t + '</h2>'
-                                + '<h3>' + url + '</h3>'
+                                + '<h3><a href="'+url+'">' + url + '</a></h3>'
                                 + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
         except:
             return render(request, 'home.html',
