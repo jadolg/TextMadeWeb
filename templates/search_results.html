@@ -7,10 +7,27 @@
 <body>
 <div style="margin: auto;
     width: 80%;
-    border: 3px solid green;
     padding: 10px;">
-    <h3>Text Made Web</h3>
+    <h3><a href="/"> <- </a> Text Made Web</h3>
     <p>Making the web smaller</p>
+
+    <div style="margin: auto;
+    width: 30%;
+    border: 3px solid dodgerblue;
+    padding: 10px;">
+        <p>Search again or text a page...</p>
+        {% if not message %}
+            <form method="post" action="/">
+                {% csrf_token %}
+                <input style="width: 80%" type="text" name="url"/>
+                <button type="submit">Text it!</button>
+            </form>
+        {% else %}
+            <h4 style="color: darkred">{{ message }}</h4>
+            <a href="/"><- back</a>
+        {% endif %}
+    </div>
+
     {% for sr in results %}
         <div>
             <h3><a href="{{ baseurl }}/t/{{ sr.link }}">{{ sr.name }}</a></h3>
@@ -19,14 +36,15 @@
     {% endfor %}
 </div>
 <div style="margin: auto;
-    width: 13%;
-    border: 3px solid green;
+    width: 25%;
+    border: 3px solid dodgerblue;
     padding: 10px;
     margin-top: 10px">
     <h3>Text Made Web</h3>
     <p>Making the web smaller</p>
     <p>Go <a href="/">Home</a></p>
-    <p>Fork me on <a target="_blank" href="https://github.com/jadolg/TextMadeWeb">GitHub</a><p>
+    <p>Fork me on <a target="_blank" href="https://github.com/jadolg/TextMadeWeb">GitHub</a>
+    <p>
 </div>
 </body>
 </html>
