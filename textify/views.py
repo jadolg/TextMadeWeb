@@ -10,7 +10,7 @@ from google import google
 
 PAGE_BOTTOM = '''<div style="margin: auto;
     width: 13%;
-    border: 3px solid green;
+    border: 3px solid dodgerblue;
     padding: 10px;">
     <h3>Text Made Web</h3>
     <p>Making the web smaller</p>
