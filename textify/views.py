@@ -79,7 +79,7 @@ def textify_it(request, url):
         except:
             return render(request, 'home.html', {'message': 'There was an error trying to open ' + url})
         if page.status_code == 200:
-            page = page.text
+            page = str(page.text)
         else:
             return render(request, 'home.html',
                           {'message': "I'm unable to textify this page. Error code " + str(page.status_code)})
@@ -94,10 +94,11 @@ def textify_it(request, url):
             md = insert_cleaner_url(md, get_url(request))
             md = remove_jumps(md)
 
-            return HttpResponse(title + '<body><h2>'+t+'</h2><h4><a href="'+url+'">'+url+'</a></h4>' + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
+            return HttpResponse(title + '<body><h2>'+t[0]+'</h2><h4><a href="'+url+'">'+url+'</a></h4>'
+                                + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
         except:
             return render(request, 'home.html',
-                          {'message': 'I was unable to textify this page due to an empty response'})
+                          {'message': 'I was unable to textify this page :\'('})
     else:
         try:
             search_results = google.search(url, 3)
