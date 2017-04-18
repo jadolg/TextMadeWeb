@@ -95,7 +95,7 @@ def textify_it(request, url):
             md = remove_jumps(md)
 
             return HttpResponse(title + '<body>'
-                                        '<h2>' + title + '</h2>'
+                                        '<h2>' + t + '</h2>'
                                 + '<h3>' + url + '</h3>'
                                 + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
         except:
