@@ -19,7 +19,7 @@
         {% if not message %}
             <form method="post" action="/">
                 {% csrf_token %}
-                <input style="width: 80%" type="text" name="url"/>
+                <input style="width: 80%" type="text" name="url" value="{{ q }}"/>
                 <button type="submit">Text it!</button>
             </form>
         {% else %}

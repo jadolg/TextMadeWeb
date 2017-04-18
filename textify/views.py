@@ -101,7 +101,7 @@ def textify_it(request, url):
     else:
         try:
             search_results = google.search(url, 3)
-            return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request)})
+            return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request), 'q': url})
         except:
             return render(request, 'home.html',
                           {'message': "There has being an error while searching :'("})
