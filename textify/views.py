@@ -94,7 +94,7 @@ def textify_it(request, url):
             md = insert_cleaner_url(md, get_url(request))
             md = remove_jumps(md)
 
-            return HttpResponse(title + '<body>' + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
+            return HttpResponse(title + '<body><h2>'+title+'</h2><h4><a href="'+url+'">'+url+'</a></h4>' + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
         except:
             return render(request, 'home.html',
                           {'message': 'I was unable to textify this page due to an empty response'})
