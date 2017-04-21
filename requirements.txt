@@ -1,9 +1,11 @@
 beautifulsoup4==4.5.3
 Django==1.10.6
+django-htmlmin==0.10.0
 future==0.16.0
-git+https://github.com/abenassi/Google-Search-API/
+Google-Search-API==1.1.14
 gunicorn==19.7.1
 html2text==2016.9.19
+html5lib==0.999999999
 Markdown==2.6.8
 multidict==2.1.4
 PyYAML==3.12
@@ -12,5 +14,6 @@ selenium==2.53.6
 six==1.10.0
 Unidecode==0.4.20
 vcrpy==1.10.5
+webencodings==0.5.1
 wrapt==1.10.10
 yarl==0.10.0

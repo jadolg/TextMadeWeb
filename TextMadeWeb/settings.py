@@ -24,6 +24,7 @@ SECRET_KEY = 'tu)3sdiryy+(k-eu2caz%sb^2b#)@=k2w$odag84ur)b!=m5#p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+HTML_MINIFY = True
 
 ALLOWED_HOSTS = ['txtmdweb.herokuapp.com', '127.0.0.1', 'localhost', ]
 
@@ -48,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'TextMadeWeb.urls'
@@ -55,8 +58,7 @@ ROOT_URLCONF = 'TextMadeWeb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
