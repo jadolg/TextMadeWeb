@@ -19,11 +19,6 @@ PAGE_BOTTOM = '''<div style="margin: auto;
 </div>
 '''
 
-proxyDict = {
-    "http": "http://127.0.0.1:3128",
-    "https": "https://127.0.0.1:3128",
-}
-
 
 def home(request):
     if request.method == 'POST' and 'url' in request.POST:
@@ -32,8 +27,8 @@ def home(request):
 
 
 def remove_img_md(data):
-    p = re.compile(r'!\s*\[.*?\]', re.DOTALL)
-    return p.sub('[image]', data)
+    p = re.compile(r'!\s*\[.*?\]\(.*?\)', re.DOTALL)
+    return p.sub('', data)
 
 
 def remove_jumps(data):
@@ -89,11 +84,11 @@ def textify_it(request, url):
             if len(t) > 0:
                 title = '<head><title>' + t[0] + ' | Text Made Web</title></head>'
             md = html2text.html2text(page, bodywidth=0, baseurl=url)
+            md = remove_jumps(md)
             md = remove_img_md(md)
             md = insert_cleaner_url(md, get_url(request))
-            md = remove_jumps(md)
 
-            return HttpResponse(title + '<body><h2>'+t[0]+'</h2><h4><a href="'+url+'">'+url+'</a></h4>'
+            return HttpResponse(title + '<body><h2>' + t[0] + '</h2><h4><a href="' + url + '">' + url + '</a></h4>'
                                 + markdown.markdown(md) + PAGE_BOTTOM + '<body>')
         except:
             return render(request, 'home.html',
@@ -101,7 +96,8 @@ def textify_it(request, url):
     else:
         try:
             search_results = google.search(url, 3)
-            return render(request, 'search_results.html', {'results': search_results, 'baseurl': get_url(request), 'q': url})
+            return render(request, 'search_results.html',
+                          {'results': search_results, 'baseurl': get_url(request), 'q': url})
         except:
             return render(request, 'home.html',
                           {'message': "There has being an error while searching :'("})
