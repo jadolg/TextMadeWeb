@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import html2text
 import markdown
 import re
