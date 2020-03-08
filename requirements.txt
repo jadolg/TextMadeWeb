@@ -9,7 +9,7 @@ html5lib==0.999999999
 Markdown==2.6.8
 multidict==2.1.4
 PyYAML==5.1
-requests==2.13.0
+requests==2.20.0
 selenium==2.53.6
 six==1.10.0
 Unidecode==0.4.20
