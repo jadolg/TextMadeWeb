@@ -8,7 +8,7 @@ html2text==2016.9.19
 html5lib==0.999999999
 Markdown==2.6.8
 multidict==2.1.4
-PyYAML==5.1
+PyYAML==5.4
 requests==2.20.0
 selenium==2.53.6
 six==1.10.0
