@@ -4,7 +4,6 @@ import re
 import requests
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from google import google
 
 PAGE_BOTTOM = '''<div style="margin: auto;
     width: 13%;
@@ -67,7 +66,7 @@ def insert_cleaner_url(data, url):
 def textify_it(request, url):
     if url.startswith('http://') or url.startswith('https://'):
         try:
-            page = requests.get(url, verify=False, allow_redirects=True)
+            page = requests.get(url, allow_redirects=True)
         except:
             return render(request, 'home.html', {'message': 'There was an error trying to open ' + url})
         if page.status_code == 200:
@@ -92,13 +91,8 @@ def textify_it(request, url):
             return render(request, 'home.html',
                           {'message': 'I was unable to textify this page :\'('})
     else:
-        try:
-            search_results = google.search(url, 3)
-            return render(request, 'search_results.html',
-                          {'results': search_results, 'baseurl': get_url(request), 'q': url})
-        except:
-            return render(request, 'home.html',
-                          {'message': "There has being an error while searching :'("})
+        return render(request, 'home.html',
+                      {'message': "I don't know what do you want me to do :\'("})
 
 
 def md_it(request, url):

@@ -1,9 +1,10 @@
-from django.conf.urls import url, include
+
+from django.urls import path
 
 from textify.views import textify_it, md_it, home
 
 urlpatterns = [
-    url(r'^$', home),
-    url(r'^t/(?P<url>.*?)$', textify_it),
-    url(r'^m/(?P<url>.*?)$', md_it),
+    path('', home),
+    path('t/<path:url>', textify_it),
+    path('m/<path:url>', md_it),
 ]
